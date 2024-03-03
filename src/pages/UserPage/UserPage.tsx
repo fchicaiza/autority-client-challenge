@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  fetchAllUsers,
-  createUser,
-  deleteUser,
-  fetchUserById,
-} from '../api/User/User';
+import {fetchAllUsers, createUser, updateUser, deleteUser} from '../api/User/User';
 import { User } from '../api/User/IUser';
 import { UserComponent } from '../../components'; // Assuming correct path
 
@@ -25,7 +20,13 @@ export const UserPage = () => {
 
   return (
     <div>
-      <UserComponent users={users} /> 
+      <UserComponent 
+      users={users}
+      fetchAllUsers={fetchAllUsers}
+      createUser={createUser}
+      updateUser={updateUser}
+      deleteUser={deleteUser}
+      /> 
     </div>
   );
 };
