@@ -3,23 +3,29 @@ import Head from 'next/head'
 import { NavbarComponent } from '../components'
 import UserPage from './UserPage/UserPage'
 
-import styles from '../styles/Home.module.css'
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+
+// import styles from '../styles/Home.module.css'
 
 const IndexPage: NextPage = () => {
   return (
-    <><div className={styles.container}>
+    <><div className="Container">
       <NavbarComponent></NavbarComponent>
-      <UserPage></UserPage>
       <Head>
         <title>Autority Challenge</title>
       </Head>
-      <header className={styles.header}>
+      {/* <header className={styles.header}>
         <p>
           Edit <code>src/App.tsx</code> for your logicasds
         </p>
-      </header>
+      </header> */}
 
-    </div></>
+    </div>
+    <UserPage></UserPage>
+    <div >
+ 
+    </div>
+    </>
   )
 }
 
