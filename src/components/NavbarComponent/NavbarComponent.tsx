@@ -13,7 +13,7 @@ export const NavbarComponent = () => {
     return (
         <>
           {[false].map((expand) => (
-            <Navbar  expand={expand}  bg="dark" data-bs-theme="dark">
+            <Navbar  key={"navbar"} expand={expand}  bg="dark" data-bs-theme="dark">
               <Container fluid>
                 <Navbar.Brand href="#" >Technnical Frontend Challenge (Fernando Chicaiza)</Navbar.Brand>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
