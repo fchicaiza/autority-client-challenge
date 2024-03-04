@@ -4,23 +4,21 @@ import { User } from './IUser';
 
 const apiUrl = `${process.env.apiUrl}/user`
 
+
 export const fetchAllUsers = async (): Promise<User[]> => {
     try {
-        const response = await fetch(apiUrl);
-
+        const url = `${apiUrl}`;
+        const response = await fetch(url, { method: 'POST' });
         if (!response.ok) {
             const errorText = await response.text();
             const error = JSON.parse(errorText);
-
             throw new Error(error.message);
         }
-
         const data = await response.json();
-   
         return data.data;
     } catch (error) {
         console.error('Error fetching users:', error.message);
-        return []; // Return an empty array in case of error
+        return []; 
     }
 };
 

@@ -14,7 +14,7 @@ import TodoForm from './TodoForm';
 import 'primeicons/primeicons.css';
 
 
-export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, deleteTask }) => {
+export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, deleteTask, users }) => {
 
   let emptyTask: Todo = {
     id: '',
@@ -92,10 +92,9 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
     );
   };
 
+  
 
-  useEffect(() => {
-    fetchAllTasks()
-  }, [])
+
   return (
     <>
       <div className="container col-12">
@@ -119,7 +118,8 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
           updateTask={updateTask}
           fetchAllTasks={fetchAllTasks}
           deleteTask={deleteTask}
-          tasks={tasks}
+          task={task}
+          users={users}
         ></TodoForm>
       </Dialog>
 
@@ -130,7 +130,8 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
            updateTask={updateTask}
            fetchAllTasks={fetchAllTasks}
            deleteTask={deleteTask}
-           tasks={tasks}
+           task={task}
+           users={users}
         ></TodoForm>
       </Dialog>
     </>

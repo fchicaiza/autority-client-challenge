@@ -7,16 +7,12 @@ const apiUrl = `${process.env.apiUrl}/task`
 export const fetchAllTasks = async (): Promise<Todo[]> => {
     try {
         const response = await fetch(apiUrl);
-
         if (!response.ok) {
             const errorText = await response.text();
             const error = JSON.parse(errorText);
-
             throw new Error(error.message);
         }
-
         const data = await response.json();
-   
         return data.data;
     } catch (error) {
         console.error('Error fetching tasks:', error.message);

@@ -1,76 +1,81 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button } from 'primereact/button';
 
 import './styles/TodoForm.css';
 
-export const TodoForm = ({ hideDialog, createTask, updateTask, fetchAllTasks, deleteTask, tasks }) => {
-
+export const TodoForm = ({ hideDialog, createTask, fetchAllTasks, updateTask, deleteTask, task, users }) => {
+    const [selectedUserId, setSelectedUserId] = useState('');
 
     const formik = useFormik({
         initialValues: {
             id: '',
             name: '',
             description: '',
-            author: '',
             isComplete: '',
             userId: ''
         },
         validationSchema: Yup.object({
-            name: Yup.string().required('Campo Obligatorio'),
+            name: Yup.string().required('Campo Obligatorio '),
             description: Yup.string().required('Campo Obligatorio'),
-            author: Yup.string().required('Campo Obligatorio'),
-            isComplete: Yup.string().email('Debe indicar si su solicitud fue resuelta o no').required('Campo obligatorio'),
-            userId: Yup.string().required('La contraseña es un campo obligatrio').required('Campo obligatorio'),
+            isComplete: Yup.string().required('Campo obligatorio'),
+            userId: Yup.string().required('Campo obligatorio'),
         }),
         onSubmit: async (values) => {
-            handleSubmitUser(values);
+            handleSubmitTask(values);
+            fetchAllTasks();
         },
     });
 
     useEffect(() => {
-        if (tasks) {
+        if (task) {
             formik.setValues({
-                id: tasks.id || '',
-                name: tasks.name || '',
-                description: tasks.description || '',
-                author: tasks.author || '',
-                isComplete:tasks.isComplete || '',
-                userId : tasks.userId || '',
+                id: task.id || '',
+                name: task.name || '',
+                description: task.description || '',
+                userId: task.userId || '',
+                isComplete: task.isComplete.toString() || ''
             });
+            setSelectedUserId(task.userId || '');
         }
-    }, []);
+    }, [task]);
 
-    const handleSubmitUser = async (values) => {
+    const handleSubmitTask = async (values) => {
+        console.log(values)
+        let authorData = users.data.find(u => u.id === Number(values.userId))
+        let taskData = {
+            id: values.id,
+            name: values.name,
+            description: values.description,
+            author: `${authorData.firstName} ${authorData.lastName}`,
+            userId: authorData.id,
+            isComplete: values.isComplete
+        }
         try {
             if (values.id) {
-                const isUpdated = await updateTask(values.id, values);
-                fetchAllTasks();
-                alert(`Tarea actualizada exitosamente`);
-                console.log('Tarea actualizada:', isUpdated);
-            } else {
-                const isCreated = await createTask(values);
+                const isUpdated = await updateTask(values.id, taskData);
                 hideDialog(true);
-                fetchAllTasks();
+                alert(`Tarea actualizada exitosamente`);
+            } else {
+                const isCreated = await createTask(taskData);
+                hideDialog(true);
                 alert(`Tarea creada exitosamente`);
                 console.log('Tarea creada:', isCreated);
             }
         } catch (error) {
-            console.error('Error al transaccionar con las tareas:', error.message);
+            console.error('Error al operar con la tarea:', error.message);
         }
     };
 
-
     return (
         <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="id">Id</label>
+            <label htmlFor="name">Nombre</label>
             <input
                 id="id"
                 type="text"
                 hidden
                 {...formik.getFieldProps('id')}
-
             />
             <input
                 id="name"
@@ -81,6 +86,7 @@ export const TodoForm = ({ hideDialog, createTask, updateTask, fetchAllTasks, de
             {formik.touched.name && formik.errors.name ? (
                 <div className="error-message">{formik.errors.name}</div>
             ) : null}
+
 
             <label htmlFor="description">Descripción</label>
             <input
@@ -93,30 +99,40 @@ export const TodoForm = ({ hideDialog, createTask, updateTask, fetchAllTasks, de
                 <div className="error-message">{formik.errors.description}</div>
             ) : null}
 
-            <label htmlFor="author">Autor</label>
-            <input
-                id="author"
-                type="author"
-                {...formik.getFieldProps('author')}
-                className={formik.touched.author && formik.errors.author ? 'input-error' : ''}
-            />
-            {formik.touched.author && formik.errors.author ? (
-                <div className="error-message">{formik.errors.author}</div>
-            ) : null}
 
-            <label htmlFor="userId">Contraseña</label>
-            <input
+            <label htmlFor="userId">Autor</label>
+            <select
                 id="userId"
-                type="userId"
-                hidden
                 {...formik.getFieldProps('userId')}
                 className={formik.touched.userId && formik.errors.userId ? 'input-error' : ''}
-            />
+            >
+                <option value="" label="Seleccionar autor" />
+                {users.data.map(user => (
+                    <option key={user.id} value={user.id}>{`${user.firstName} ${user.lastName}`}</option>
+                ))}
+            </select>
+
+
             {formik.touched.userId && formik.errors.userId ? (
                 <div className="error-message">{formik.errors.userId}</div>
             ) : null}
 
-            <br /> <br />
+
+            <label htmlFor="isComplete">Resuelto</label>
+            <select
+                id="isComplete"
+                {...formik.getFieldProps('isComplete')}
+                className={formik.touched.isComplete && formik.errors.isComplete ? 'input-error' : ''}
+            >
+                <option value="" label="Seleccionar opción" />
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+            {formik.touched.isComplete && formik.errors.isComplete ? (
+                <div className="error-message">{formik.errors.isComplete}</div>
+            ) : null}
+
+            <br /> <br /><br /> <br />
             <React.Fragment>
                 <div className='custom-button-container'>
                     <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} />
