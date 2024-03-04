@@ -6,6 +6,8 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const NavbarComponent=()=> {
+
+  const apiUrl = process.env.routeUrl
   return (
     <>
       {[false].map((expand) => (
@@ -25,8 +27,8 @@ export const NavbarComponent=()=> {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="#action1">Users</Nav.Link>
-                  <Nav.Link href="#action2">Tasks</Nav.Link>
+                  <Nav.Link href={`${apiUrl}/UserPage/UserPage`}>Users</Nav.Link>
+                  <Nav.Link href={`${apiUrl}/TodoPage/TodoPage`}>Tasks</Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

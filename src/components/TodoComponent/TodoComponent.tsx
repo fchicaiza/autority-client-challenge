@@ -14,7 +14,8 @@ import TodoForm from './TodoForm';
 import 'primeicons/primeicons.css';
 
 
-export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, deleteTask, users }) => {
+export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, deleteTask, users,fetchedTasks,setFetchedTasks  }) => {
+
 
   let emptyTask: Todo = {
     id: '',
@@ -63,8 +64,6 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
 
 
   const updateUserFunc = (rowData) => {
-    console.log("INFO A ACTUALIZAR", rowData)
-    // return
     setTask({ ...rowData });
     setTaskUpdateDialog(true);
   };
@@ -93,7 +92,7 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
   };
 
   
-
+  
 
   return (
     <>
@@ -120,6 +119,8 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
           deleteTask={deleteTask}
           task={task}
           users={users}
+          fetchedTasks={fetchedTasks}
+          setFetchedTasks={setFetchedTasks}
         ></TodoForm>
       </Dialog>
 
@@ -132,6 +133,8 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
            deleteTask={deleteTask}
            task={task}
            users={users}
+           fetchedTasks={fetchedTasks}
+           setFetchedTasks={setFetchedTasks}
         ></TodoForm>
       </Dialog>
     </>

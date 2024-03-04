@@ -6,15 +6,13 @@ import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
 import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
-import { Tag } from 'primereact/tag';
 import { User } from '../../pages/api/User/IUser';
 import { UserForm } from './UserForm';
 
 import 'primeicons/primeicons.css';
 
 
-export const UserComponent = ({ users, createUser, updateUser, fetchAllUsers, deleteUser }) => {
+export const UserComponent = ({ users, createUser, updateUser, fetchAllUsers, deleteUser, setFetchedUsers,setUsers}) => {
 
   let emptyUser: User = {
     id: '',
@@ -61,8 +59,6 @@ export const UserComponent = ({ users, createUser, updateUser, fetchAllUsers, de
 
 
   const updateUserFunc = (rowData) => {
-    console.log("INFO A ACTUALIZAR", rowData)
-    // return
     setUser({ ...rowData });
     setUserUpdateDialog(true);
   };
@@ -91,9 +87,7 @@ export const UserComponent = ({ users, createUser, updateUser, fetchAllUsers, de
   };
 
 
-  useEffect(() => {
-    fetchAllUsers()
-  }, [])
+
   return (
     <>
       <div className="container col-12">
@@ -116,6 +110,8 @@ export const UserComponent = ({ users, createUser, updateUser, fetchAllUsers, de
           fetchAllUsers={fetchAllUsers}
           deleteUser={deleteUser}
           user={user}
+          setFetchedUsers={setFetchedUsers}
+          setUsers={setUsers}
         ></UserForm>
       </Dialog>
 
@@ -127,6 +123,8 @@ export const UserComponent = ({ users, createUser, updateUser, fetchAllUsers, de
           fetchAllUsers={fetchAllUsers}
           deleteUser={deleteUser}
           user={user}
+          setFetchedUsers={setFetchedUsers}
+          setUsers={setUsers}
         ></UserForm>
       </Dialog>
     </>

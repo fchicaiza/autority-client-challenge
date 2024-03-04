@@ -8,7 +8,7 @@ const apiUrl = `${process.env.apiUrl}/user`
 export const fetchAllUsers = async (): Promise<User[]> => {
     try {
         const url = `${apiUrl}`;
-        const response = await fetch(url, { method: 'POST' });
+        const response = await fetch(url, { method: 'GET' });
         if (!response.ok) {
             const errorText = await response.text();
             const error = JSON.parse(errorText);

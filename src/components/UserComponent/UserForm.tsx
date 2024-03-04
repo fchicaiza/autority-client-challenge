@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 
 import './styles/UserForm.css';
 
-export const UserForm = ({ hideDialog, createUser, updateUser, fetchAllUsers, deleteUser, user }) => {
+export const UserForm = ({ hideDialog, createUser, updateUser, fetchAllUsers, deleteUser, user, setFetchedUsers, setUsers }) => {
 
 
     const formik = useFormik({
@@ -43,6 +43,7 @@ export const UserForm = ({ hideDialog, createUser, updateUser, fetchAllUsers, de
         try {
             if (values.id) {
                 const isUpdated = await updateUser(values.id, values);
+                hideDialog(true);
                 fetchAllUsers();
                 alert(`Usuario actualizado exitosamente`);
                 console.log('Usuario actualizado:', isUpdated);
@@ -58,6 +59,9 @@ export const UserForm = ({ hideDialog, createUser, updateUser, fetchAllUsers, de
         }
     };
 
+    useEffect(() => {
+        fetchAllUsers()
+    }, [])
 
     return (
         <form onSubmit={formik.handleSubmit}>

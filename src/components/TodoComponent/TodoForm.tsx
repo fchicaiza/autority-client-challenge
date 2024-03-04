@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 
 import './styles/TodoForm.css';
 
-export const TodoForm = ({ hideDialog, createTask, fetchAllTasks, updateTask, deleteTask, task, users }) => {
+export const TodoForm = ({ hideDialog, createTask, fetchAllTasks, updateTask, deleteTask, task, users , fetchedTasks,setFetchedTasks}) => {
     const [selectedUserId, setSelectedUserId] = useState('');
 
     const formik = useFormik({
@@ -24,7 +24,7 @@ export const TodoForm = ({ hideDialog, createTask, fetchAllTasks, updateTask, de
         }),
         onSubmit: async (values) => {
             handleSubmitTask(values);
-            fetchAllTasks();
+           
         },
     });
 
@@ -56,10 +56,14 @@ export const TodoForm = ({ hideDialog, createTask, fetchAllTasks, updateTask, de
             if (values.id) {
                 const isUpdated = await updateTask(values.id, taskData);
                 hideDialog(true);
+                setFetchedTasks(taskData)
+              await fetchAllTasks();
                 alert(`Tarea actualizada exitosamente`);
             } else {
                 const isCreated = await createTask(taskData);
                 hideDialog(true);
+                setFetchedTasks(taskData)
+                await fetchAllTasks();
                 alert(`Tarea creada exitosamente`);
                 console.log('Tarea creada:', isCreated);
             }
@@ -67,6 +71,10 @@ export const TodoForm = ({ hideDialog, createTask, fetchAllTasks, updateTask, de
             console.error('Error al operar con la tarea:', error.message);
         }
     };
+
+
+   
+       
 
     return (
         <form onSubmit={formik.handleSubmit}>

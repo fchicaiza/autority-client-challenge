@@ -1,12 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { NavbarComponent } from '../components'
-import UserPage from './UserPage/UserPage'
 
-import "primereact/resources/themes/lara-light-cyan/theme.css";
-import TodoPage from './TodoPage/TodoPage';
-
-// import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css'
 
 const IndexPage: NextPage = () => {
   return (
@@ -15,15 +11,13 @@ const IndexPage: NextPage = () => {
       <Head>
         <title>Autority Challenge</title>
       </Head>
-      {/* <header className={styles.header}>
+      <header className={styles.header}>
         <p>
-          Edit <code>src/App.tsx</code> for your logicasds
+          Abre el menú para acceder a los CRUDS, debes instalar dependencias usando la extension <code>  --legacy-peer-deps</code> Gracias !!
         </p>
-      </header> */}
+      </header>
 
     </div>
-    {/* <UserPage></UserPage> */}
-    <TodoPage></TodoPage>
     <div >
  
     </div>
