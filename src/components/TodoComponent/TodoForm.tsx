@@ -42,7 +42,6 @@ export const TodoForm = ({ hideDialog, createTask, fetchAllTasks, updateTask, de
     }, [task]);
 
     const handleSubmitTask = async (values) => {
-        console.log(values)
         let authorData = users.data.find(u => u.id === Number(values.userId))
         let taskData = {
             id: values.id,

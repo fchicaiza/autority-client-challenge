@@ -14,8 +14,7 @@ import TodoForm from './TodoForm';
 import 'primeicons/primeicons.css';
 
 
-export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, deleteTask, users,fetchedTasks,setFetchedTasks  }) => {
-
+export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, deleteTask, users,fetchedTasks,setFetchedTasks, setTasks  }) => {
 
   let emptyTask: Todo = {
     id: '',
@@ -57,7 +56,7 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
   const leftToolbarTemplate = () => {
     return (
       <div className="flex flex-wrap gap-2">
-        <Button label="Nuevo" icon="pi pi-plus" severity="success" onClick={openNew} />
+        <Button label="Agregar Nueva Tarea" icon="pi pi-plus" severity="success" onClick={openNew} />
       </div>
     );
   };
@@ -98,7 +97,7 @@ export const TodoComponent = ({ tasks, createTask, updateTask, fetchAllTasks, de
     <>
       <div className="container col-12">
         <Toast ref={toast} />
-        <Toolbar className="mb-4" left={leftToolbarTemplate}></Toolbar>
+        <Toolbar className="mb-4" left={leftToolbarTemplate} title='Tareas'></Toolbar>
         <DataTable value={tasks} selectionMode="single" selection={selectedTask} onSelectionChange={(e) => setSelectedTask(e.value)} dataKey="id"
           onRowSelect={onRowSelect} onRowUnselect={onRowUnselect} metaKeySelection={false} tableStyle={{ minWidth: '50rem' }}>
           <Column field="name" header="Nombre"></Column>

@@ -52,7 +52,7 @@ export const UserComponent = ({ users, createUser, updateUser, fetchAllUsers, de
   const leftToolbarTemplate = () => {
     return (
       <div className="flex flex-wrap gap-2">
-        <Button label="Nuevo" icon="pi pi-plus" severity="success" onClick={openNew} />
+        <Button label="Agregar Nuevo Usuario" icon="pi pi-plus" severity="success" onClick={openNew} />
       </div>
     );
   };
