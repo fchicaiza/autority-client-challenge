@@ -1,10 +1,10 @@
 import type { NextApiHandler } from 'next';
-import { User } from './IUser';
+import { Todo } from './ITodo';
 
 
-const apiUrl = `${process.env.apiUrl}/user`
+const apiUrl = `${process.env.apiUrl}/task`
 
-export const fetchAllUsers = async (): Promise<User[]> => {
+export const fetchAllTasks = async (): Promise<Todo[]> => {
     try {
         const response = await fetch(apiUrl);
 
@@ -19,54 +19,54 @@ export const fetchAllUsers = async (): Promise<User[]> => {
    
         return data.data;
     } catch (error) {
-        console.error('Error fetching users:', error.message);
-        return []; // Return an empty array in case of error
+        console.error('Error fetching tasks:', error.message);
+        return []; 
     }
 };
 
-export const fetchUserById = async (id) => {
+export const fetchTaskById = async (id) => {
     const url = `${apiUrl}/${id}`;
     const response = await fetch(url, { method: 'GET' });
     if (!response.ok) {
-        throw new Error(`Error deleting user: ${response.statusText}`);
+        throw new Error(`Error while trying get a task: ${response.statusText}`);
     }
 };
 
 
-export const createUser = async (newUser) => {
+export const createTask = async (newTask) => {
     const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(newTask),
     });
     if (!response.ok) {
-        throw new Error(`Error creating user: ${response.statusText}`);
+        throw new Error(`Error creating a new task: ${response.statusText}`);
     }
     return await response.json();
 };
 
-export const updateUser = async (id, updatedUser) => {
+export const updateTask = async (id, updatedTask) => {
     const url = `${apiUrl}/${id}`;
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedUser),
+        body: JSON.stringify(updatedTask),
     });
     if (!response.ok) {
-        throw new Error(`Error updating user: ${response.statusText}`);
+        throw new Error(`Error updating a task: ${response.statusText}`);
     }
     return await response.json();
 };
 
-export const deleteUser = async (id) => {
+export const deleteTask = async (id) => {
     const url = `${apiUrl}/${id}`;
     const response = await fetch(url, { method: 'DELETE' });
     if (!response.ok) {
-        throw new Error(`Error deleting user: ${response.statusText}`);
+        throw new Error(`Error deleting a task : ${response.statusText}`);
     }
 };
 

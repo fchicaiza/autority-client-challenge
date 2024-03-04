@@ -4,6 +4,7 @@ import { NavbarComponent } from '../components'
 import UserPage from './UserPage/UserPage'
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import TodoPage from './TodoPage/TodoPage';
 
 // import styles from '../styles/Home.module.css'
 
@@ -21,7 +22,8 @@ const IndexPage: NextPage = () => {
       </header> */}
 
     </div>
-    <UserPage></UserPage>
+    {/* <UserPage></UserPage> */}
+    <TodoPage></TodoPage>
     <div >
  
     </div>
